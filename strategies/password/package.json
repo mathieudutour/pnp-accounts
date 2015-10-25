@@ -9,6 +9,9 @@
     "eslint": "eslint src/",
     "test": "echo \"Error: no test specified\" && exit 0"
   },
+  "files": [
+    "build/*"
+  ],
   "author": "Mathieu Dutour <mathieu@dutour.me> (http://mathieu.dutour.me/)",
   "license": "ISC",
   "peerDependencies": {

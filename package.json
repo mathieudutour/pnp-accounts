@@ -7,7 +7,9 @@
     "prebuild": "rm -rf build && mkdir build",
     "build": "babel src/ --out-dir build/",
     "eslint": "eslint src/",
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "build:all": "npm run build && (cd strategies/facebook && npm run build) && (cd strategies/password && npm run build)",
+    "publish:all": "npm publish && (cd strategies/facebook && npm publish) && (cd strategies/password && npm publish)"
   },
   "files": [
     "index.js",

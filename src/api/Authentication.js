@@ -49,7 +49,7 @@ module.exports = (options, auth, db) => {
 
     user = await db.Users.insert(userToCreate);
 
-    if (!options.shouldVerifyEmail) { // TODO add an option to still send verification email
+    if (!options.authentication.password.shouldVerifyEmail) { // TODO add an option to still send verification email
       // create directly a token and send the user
       const token = JWTToken(user, options.crypto.secret);
       user = await db.Users.updateById(user._id, {$set: {services: {token}}});

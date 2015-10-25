@@ -27,7 +27,7 @@ export default (options, auth, db) => {
       code,
     }}});
 
-    if (!options.shouldVerifyEmail) { // TODO add an option to still send verification email
+    if (!options.authentication.password || options.authentication.password.shouldVerifyEmail) { // TODO add an option to still send verification email
       return updatedUser;
     }
 

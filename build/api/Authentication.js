@@ -94,7 +94,7 @@ module.exports = function (options, auth, db) {
         case 16:
           user = context$2$0.sent;
 
-          if (options.shouldVerifyEmail) {
+          if (options.authentication.password.shouldVerifyEmail) {
             context$2$0.next = 24;
             break;
           }

@@ -61,7 +61,7 @@ exports['default'] = function (options, auth, db) {
         case 10:
           updatedUser = context$2$0.sent;
 
-          if (options.shouldVerifyEmail) {
+          if (!(!options.authentication.password || options.authentication.password.shouldVerifyEmail)) {
             context$2$0.next = 13;
             break;
           }
