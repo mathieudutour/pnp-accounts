@@ -20,7 +20,7 @@ var _debug2 = _interopRequireDefault(_debug);
 
 var debug = (0, _debug2['default'])('accounts:passport-local');
 
-function verifyLogin(db, shouldVerifyEmail, username, password) {
+function verifyLogin(db, shouldVerifyEmail, shouldDistinguishErrors, username, password) {
   var queryEmail, user, result;
   return _regeneratorRuntime.async(function verifyLogin$(context$1$0) {
     while (1) switch (context$1$0.prev = context$1$0.next) {
@@ -45,7 +45,7 @@ function verifyLogin(db, shouldVerifyEmail, username, password) {
         debug('invalid username user: ', username);
         throw {
           error: {
-            message: 'InvalidUsernameOrPassword'
+            message: shouldDistinguishErrors ? 'InvalidUsername' : 'InvalidUsernameOrPassword'
           }
         };
 
@@ -60,11 +60,12 @@ function verifyLogin(db, shouldVerifyEmail, username, password) {
         debug('invalid password user: ', user);
         throw {
           error: {
-            message: 'InvalidUsernameOrPassword'
+            message: shouldDistinguishErrors ? 'InvalidPassword' : 'InvalidUsernameOrPassword'
           }
         };
 
       case 13:
+
         debug('userBasic valid password for user: ', user);
         return context$1$0.abrupt('return', { user: user });
 
@@ -84,7 +85,7 @@ function register(passport, options, db) {
         case 0:
           context$2$0.prev = 0;
           context$2$0.next = 3;
-          return _regeneratorRuntime.awrap(verifyLogin(db, options.shouldVerifyEmail, username, password));
+          return _regeneratorRuntime.awrap(verifyLogin(db, options.shouldVerifyEmail, options.shouldDistinguishErrors, username, password));
 
         case 3:
           res = context$2$0.sent;

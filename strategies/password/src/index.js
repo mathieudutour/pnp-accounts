@@ -3,7 +3,7 @@ import {compare} from './utils';
 import Debug from 'debug';
 const debug = Debug('accounts:passport-local');
 
-export async function verifyLogin(db, shouldVerifyEmail, username, password) {
+export async function verifyLogin(db, shouldVerifyEmail, shouldDistinguishErrors, username, password) {
   debug('verify username: ', username);
   const queryEmail = {emails: { $elemMatch: { address: username } }};
   if (shouldVerifyEmail) {
@@ -15,20 +15,22 @@ export async function verifyLogin(db, shouldVerifyEmail, username, password) {
     debug('invalid username user: ', username);
     throw {
       error: {
-        message: 'InvalidUsernameOrPassword',
+        message: shouldDistinguishErrors ? 'InvalidUsername' : 'InvalidUsernameOrPassword',
       },
     };
   }
 
   const result = compare(password, user.password);
+
   if (!result) {
     debug('invalid password user: ', user);
     throw {
       error: {
-        message: 'InvalidUsernameOrPassword',
+        message: shouldDistinguishErrors ? 'InvalidPassword' : 'InvalidUsernameOrPassword',
       },
     };
   }
+
   debug('userBasic valid password for user: ', user);
   return {user};
 }
@@ -38,7 +40,7 @@ export function register(passport, options, db) {
   const loginStrategy = new LocalStrategy(options,
     async function then(username, password, done) {
       try {
-        const res = await verifyLogin(db, options.shouldVerifyEmail, username, password);
+        const res = await verifyLogin(db, options.shouldVerifyEmail, options.shouldDistinguishErrors, username, password);
         done(null, res.user);
       } catch (err) {
         done(err);
