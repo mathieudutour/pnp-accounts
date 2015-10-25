@@ -70,6 +70,8 @@ exports['default'] = function (options, db) {
   }
 
   return {
+    initialize: _passport2['default'].initialize,
+    session: _passport2['default'].session,
     ensureAuthenticated: ensureAuthenticated,
     isAuthorized: isAuthorized
   };

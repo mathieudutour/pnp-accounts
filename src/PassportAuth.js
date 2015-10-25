@@ -52,6 +52,8 @@ export default function(options, db) {
   }
 
   return {
+    initialize: passport.initialize,
+    session: passport.session,
     ensureAuthenticated,
     isAuthorized,
   };

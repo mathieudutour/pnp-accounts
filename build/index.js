@@ -64,8 +64,9 @@ var PnpAccounts = (function () {
       authentication: (0, _apiAuthentication2['default'])(options, this.auth, this.db)
     };
 
-    this.middleware = {
-      ensureAuthenticated: this.auth.ensureAuthenticated
+    this.middlewares = {
+      ensureAuthenticated: this.auth.ensureAuthenticated,
+      isAuthorized: this.auth.isAuthorized
     };
 
     // this.jobs = {
@@ -82,12 +83,22 @@ var PnpAccounts = (function () {
       this.db.PasswordReset = this.db.get(this.options.db.passwordResetCollection);
     }
   }, {
+    key: 'initialize',
+    value: function initialize() {
+      return this.auth.initialize();
+    }
+  }, {
+    key: 'session',
+    value: function session() {
+      return this.auth.session();
+    }
+  }, {
     key: 'router',
     get: function get() {
       var router = new _express2['default'].Router();
-      router.use('/auth', this.routers.authentication);
-      router.use('/', this.auth.ensureAuthenticated, this.routers.users);
-      router.use('/', this.auth.ensureAuthenticated, this.routers.me);
+      router.use('/auth', this._routers.authentication);
+      router.use('/', this.auth.ensureAuthenticated, this._routers.users);
+      router.use('/', this.auth.ensureAuthenticated, this._routers.me);
       return router;
     }
   }]);

@@ -29,8 +29,9 @@ export default class PnpAccounts {
       authentication: AuthenticationRoutes(options, this.auth, this.db),
     };
 
-    this.middleware = {
+    this.middlewares = {
       ensureAuthenticated: this.auth.ensureAuthenticated,
+      isAuthorized: this.auth.isAuthorized,
     };
 
     // this.jobs = {
@@ -47,9 +48,17 @@ export default class PnpAccounts {
 
   get router() {
     const router = new express.Router();
-    router.use('/auth', this.routers.authentication);
-    router.use('/', this.auth.ensureAuthenticated, this.routers.users);
-    router.use('/', this.auth.ensureAuthenticated, this.routers.me);
+    router.use('/auth', this._routers.authentication);
+    router.use('/', this.auth.ensureAuthenticated, this._routers.users);
+    router.use('/', this.auth.ensureAuthenticated, this._routers.me);
     return router;
+  }
+
+  initialize() {
+    return this.auth.initialize();
+  }
+
+  session() {
+    return this.auth.session();
   }
 }

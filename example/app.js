@@ -6,7 +6,6 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 
-var passport = require('passport');
 var pnpAccounts = new (require('pnp-accounts'))(require('./pnp-accounts-config.json'));
 
 var app = express();
@@ -26,8 +25,8 @@ app.use(require('express-session')({
   resave: false,
   saveUninitialized: false,
 }));
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(pnpAccounts.initialize());
+app.use(pnpAccounts.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', pnpAccounts.router);
