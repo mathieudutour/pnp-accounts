@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "babel-runtime": "^5.8.25",
-    "bcrypt": "^0.8.5",
+    "bcrypt": "^5.0.0",
     "debug": "^2.2.0",
     "passport-local": "^1.0.0"
   },
