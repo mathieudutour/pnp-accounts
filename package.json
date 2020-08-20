@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "babel-runtime": "^5.8.25",
-    "bcrypt": "^0.8.5",
+    "bcrypt": "^5.0.0",
     "chance": "^0.8.0",
     "debug": "^2.2.0",
     "jwt-simple": "^0.3.1",
